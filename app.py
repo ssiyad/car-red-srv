@@ -1,15 +1,19 @@
 from flask import Flask
-from dotenv import load_dotenv
 
 from usecases.device_latest import device_latest
+from usecases.device_movement import device_movment
+from utils.wrap_result import wrap_result
 
-load_dotenv()
 
 app = Flask(__name__)
 
 
-@app.route('/devices/<int:device_id>', methods=['GET'])
+@app.route('/devices/<device_id>', methods=['GET'])
 def device_latest_info(device_id):
-    # return 204 (no content) if nothing found
-    return device_latest(device_id) or ('', 204)
+    return wrap_result(device_latest(device_id))
+
+
+@app.route('/devices/<device_id>/movement', methods=['GET'])
+def device_movement_info(device_id):
+    return wrap_result(device_movment(device_id))
 
