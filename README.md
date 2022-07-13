@@ -45,3 +45,36 @@ An API that takes device ID and returns start location & end location for that d
 }
 ```
 
+- `GET /devices/:device_id/locations`
+
+An API that takes in device ID, start time & end time and returns all the location points
+#### Query Params
+```
+start_date  date after which entries should start   # any common date format eg: 2022-07-13 19:50:12.527840
+end_date    date before which entries should end    # any common date format eg: 2022-07-13 19:50:12.527840
+```
+
+#### Example Response
+```
+{
+  "data": [
+    {
+      "device_fk_id": 6888,
+      "latitude": 19.729045867919922,
+      "longitude": 76.2049331665039,
+      "speed": 4.0,
+      "sts": "Sat, 23 Oct 2021 13:14:04 GMT",
+      "time_stamp": "Sat, 23 Oct 2021 04:55:55 GMT"
+    },
+    {
+      "device_fk_id": 6888,
+      "latitude": 19.729093551635742,
+      "longitude": 76.20492553710938,
+      "speed": 6.0,
+      "sts": "Sat, 23 Oct 2021 13:12:55 GMT",
+      "time_stamp": "Sat, 23 Oct 2021 04:55:57 GMT"
+    }
+  ],
+  "size": 2
+}
+```
