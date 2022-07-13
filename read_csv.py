@@ -1,26 +1,36 @@
 import csv
 from pathlib import Path
 from typing import Optional
+from datetime import datetime
+
+import dateutil.parser
 
 
 DATA_PATH = str(Path.joinpath(Path(__file__).resolve().parent, 'data', 'raw_data.csv')) 
 
 
-def read_csv(device_id: Optional[str] = None):
+def read_csv(device_id: Optional[int] = None):
     """
     read raw data return a generator
     """
     with open(DATA_PATH) as f:
-        for row in csv.reader(f):
-            if device_id and row[0] != device_id:
+        reader = csv.reader(f)
+
+        # skip header
+        next(reader, None)
+
+        for row in reader:
+            r = {
+                'device_fk_id': int(row[0]),
+                'latitude': float(row[1]),
+                'longitude': float(row[2]),
+                'time_stamp': dateutil.parser.parse(row[3]),
+                'sts': dateutil.parser.parse(row[4]),
+                'speed': float(row[5]),
+            }
+
+            if device_id and r.get('device_fk_id') != device_id:
                 continue
 
-            yield {
-                'device_fk_id': row[0],
-                'latitude': row[1],
-                'longitude': row[2],
-                'time_stamp': row[3],
-                'sts': row[4],
-                'speed': row[5],
-            }
+            yield r
 

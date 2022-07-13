@@ -5,7 +5,7 @@ from read_csv import read_csv
 from utils.get_latest import get_latest
 
 
-def device_latest(device_id: str):
+def device_latest(device_id: int):
     """
     try to fetch device information from redis.
     if not present, fetch from csv and save to
@@ -13,7 +13,7 @@ def device_latest(device_id: str):
 
     :param device_id str: id of device to be checked
     """
-    res = redis_client.get(device_id)
+    res = redis_client.get(str(device_id))
 
     if (res): return res
 
@@ -22,7 +22,7 @@ def device_latest(device_id: str):
 
     if not res: return 
 
-    redis_client.set(device_id, json.dumps(res))
-    redis_client.expire(device_id, 1800)
+    redis_client.set(str(device_id), json.dumps(res))
+    redis_client.expire(str(device_id), 1800)
     return res
 
