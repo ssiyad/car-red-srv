@@ -15,7 +15,7 @@ def device_latest(device_id: int):
     """
     res = redis_client.get(str(device_id))
 
-    if (res): return res
+    # if (res): return res
 
     raw = read_csv(device_id=device_id)
     res = get_latest(list(raw))
