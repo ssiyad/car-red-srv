@@ -37,7 +37,5 @@ def device_locations_info(device_id: int):
     if _en:
         end_date = dateutil.parser.parse(_en)
 
-    print(start_date, end_date)
-
     return wrap_result(device_locations(device_id, start_date=start_date, end_date=end_date))
 
