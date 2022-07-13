@@ -1,7 +1,9 @@
 from read_csv import read_csv
 from utils.sort_by_date import sort_by_date
+from redis_client import redis_cache 
 
 
+@redis_cache('device_movement')
 def device_movement(device_id: int):
     l = sort_by_date(list(read_csv(device_id=device_id)))
 

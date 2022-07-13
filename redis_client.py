@@ -1,6 +1,8 @@
 import os
+from typing import Callable
 
 import redis
+from flask.json import dumps
 from dotenv import load_dotenv
 
 
@@ -22,4 +24,27 @@ redis_client = redis.Redis(
     retry_on_timeout=True,
     username=REDIS_USERNAME
 )
+
+
+def redis_cache(prefix: str):
+    def ret_fn(fn: Callable):
+        def inner(*args, **kwargs):
+            q = '_'.join(str(v).replace(' ', '_') for v in kwargs.values())
+
+            match len(args):
+                case 0:
+                    k = f"{prefix}_{q}"
+                case _:
+                    k = f"{prefix}_{args[0]}_{q}"
+
+            r = redis_client.get(k)
+            if r: return r
+
+            r = fn(*args, **kwargs)
+            if r: redis_client.set(k, dumps(r))
+
+            return r
+
+        return inner
+    return ret_fn
 

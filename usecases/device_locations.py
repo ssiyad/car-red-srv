@@ -2,8 +2,10 @@ from datetime import datetime
 from typing import Optional
 from read_csv import read_csv
 from utils.sort_by_date import sort_by_date
+from redis_client import redis_cache
 
 
+@redis_cache('device_locations')
 def device_locations(
         device_id: int,
         start_date: Optional[datetime] = None,
