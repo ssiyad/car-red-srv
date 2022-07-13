@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, send_file
 
 import dateutil.parser
 
@@ -9,6 +9,11 @@ from utils.wrap_result import wrap_result
 
 
 app = Flask(__name__)
+
+
+@app.route('/data', methods=['GET'])
+def data_fetch():
+    return send_file('data/raw_data.csv')
 
 
 @app.route('/devices/<int:device_id>', methods=['GET'])
