@@ -9,6 +9,10 @@ pipenv shell                # then
 python app.py
 ```
 
+## Config
+An example `.env.example` file is provided. Edit it according to your needs and save as 'env'.
+This will be automatically loaded
+
 ## Endpoints
 
 - `GET /devices/:device_id`
