@@ -9,7 +9,11 @@ import dateutil.parser
 DATA_PATH = str(Path.joinpath(Path(__file__).resolve().parent, 'data', 'raw_data.csv')) 
 
 
-def read_csv(device_id: Optional[int] = None):
+def read_csv(
+        device_id: Optional[int] = None,
+        start_date: Optional[datetime] = None,
+        end_date: Optional[datetime] = None,
+    ):
     """
     read raw data return a generator
     """
@@ -31,6 +35,14 @@ def read_csv(device_id: Optional[int] = None):
 
             if device_id and r.get('device_fk_id') != device_id:
                 continue
+
+            if start_date:
+                time_stamp = r.get('time_stamp')
+                if not time_stamp or time_stamp <= start_date: continue
+
+            if end_date:
+                time_stamp = r.get('time_stamp')
+                if not time_stamp or time_stamp >= end_date: continue
 
             yield r
 
