@@ -2,7 +2,7 @@ from read_csv import read_csv
 from utils.sort_by_date import sort_by_date
 
 
-def device_movment(device_id: int):
+def device_movement(device_id: int):
     l = sort_by_date(list(read_csv(device_id=device_id)))
 
     match len(l):

@@ -3,7 +3,7 @@ from flask import Flask, request
 import dateutil.parser
 
 from usecases.device_latest import device_latest
-from usecases.device_movement import device_movment
+from usecases.device_movement import device_movement
 from usecases.device_locations import device_locations
 from utils.wrap_result import wrap_result
 
@@ -18,7 +18,7 @@ def device_latest_info(device_id: int):
 
 @app.route('/devices/<int:device_id>/movement', methods=['GET'])
 def device_movement_info(device_id: int):
-    return wrap_result(device_movment(device_id))
+    return wrap_result(device_movement(device_id))
 
 
 @app.route('/devices/<int:device_id>/locations', methods=['GET'])
