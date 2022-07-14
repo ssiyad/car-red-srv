@@ -9,6 +9,7 @@ gunicorn = "*"
 redis = "*"
 python-dotenv = "*"
 python-dateutil = "*"
+markdown = "*"
 
 [dev-packages]
 

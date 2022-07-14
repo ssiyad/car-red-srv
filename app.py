@@ -6,11 +6,17 @@ from usecases.device_latest import device_latest
 from usecases.device_movement import device_movement
 from usecases.device_locations import device_locations
 from utils.flask_encoder import FlaskEncoder
+from utils.readme_html import readme_html
 from utils.wrap_result import wrap_result
 
 
 app = Flask(__name__)
 app.json_encoder = FlaskEncoder
+
+
+@app.route('/', methods=['GET'])
+def index():
+    return wrap_result(readme_html())
 
 
 @app.route('/data', methods=['GET'])
